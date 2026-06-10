@@ -1,127 +1,281 @@
-const screen1 = document.getElementById("screen1");
-const screen2 = document.getElementById("screen2");
-const screen3 = document.getElementById("screen3");
-const screen4 = document.getElementById("screen4");
-const screen5 = document.getElementById("screen5");
+// ---------- SCREEN NAVIGATION ----------
+
+function nextScreen(current, next) {
+    document.getElementById(`screen${current}`).classList.remove("active");
+    document.getElementById(`screen${current}`).style.display = "none";
+
+    document.getElementById(`screen${next}`).style.display = "block";
+    document.getElementById(`screen${next}`).classList.add("active");
+}
+
+let selectedDate = "";
+let selectedTime = "";
+let selectedActivity = "";
+
+// ---------- YES BUTTON ----------
 
 const yesBtn = document.getElementById("yesBtn");
+
+yesBtn.addEventListener("click", () => {
+
+    createHeartBurst();
+
+    setTimeout(() => {
+        nextScreen(3, 4);
+    }, 1200);
+
+});
+
+// ---------- NO BUTTON ----------
+
 const noBtn = document.getElementById("noBtn");
 
-let attempts = 0;
-
-function moveButton(){
-
-const x =
-Math.random() *
-(window.innerWidth - 120);
-
-const y =
-Math.random() *
-(window.innerHeight - 80);
-
-noBtn.style.left = x + "px";
-noBtn.style.top = y + "px";
-
-attempts++;
-
-const texts = [
-"No 😭",
-"Really?",
-"Come on 😭",
-"Not happening",
-"Try harder 😂",
-"You can't catch me"
+let noMessages = [
+    "No 😅",
+    "Are you sure?",
+    "Really sure?",
+    "Still trying? 😂",
+    "Not happening 😭"
 ];
 
-if(attempts < texts.length){
-noBtn.innerText = texts[attempts];
-}
+let noAttempt = 0;
+
+let noX = 0;
+let noDirection = 1;
+
+setTimeout(() => {
+
+    setInterval(() => {
+
+        noX += (1.5 * noDirection);
+
+        if (noX > 35) noDirection = -1;
+        if (noX < -35) noDirection = 1;
+
+        noBtn.style.transform =
+            `translateX(${noX}px)`;
+
+    }, 50);
+
+}, 3000);
+
+noBtn.addEventListener("mouseenter", dodgeNoButton);
+noBtn.addEventListener("touchstart", dodgeNoButton);
+
+function dodgeNoButton() {
+
+    const randomX =
+        Math.floor(Math.random() * 80) - 40;
+
+    const randomY =
+        Math.floor(Math.random() * 25) - 12;
+
+    noBtn.style.transform =
+        `translate(${randomX}px, ${randomY}px)`;
+
+    if (noAttempt < noMessages.length) {
+        noBtn.innerText = noMessages[noAttempt];
+        noAttempt++;
+    }
 
 }
 
-setInterval(moveButton,2000);
+// ---------- DATE ----------
 
-noBtn.addEventListener("mouseover",moveButton);
+document.getElementById("dateNext")
+.addEventListener("click", () => {
 
-yesBtn.onclick = ()=>{
+    selectedDate =
+        document.getElementById("datePicker").value;
 
-screen1.classList.add("hidden");
-screen2.classList.remove("hidden");
+    if (!selectedDate) {
+        alert("Pick a date first 😊");
+        return;
+    }
 
-};
-
-document.getElementById("continueBtn")
-.onclick=()=>{
-
-screen2.classList.add("hidden");
-screen3.classList.remove("hidden");
-
-};
-
-document.getElementById("nextBtn")
-.onclick=()=>{
-
-const date =
-document.getElementById("date").value;
-
-const time =
-document.getElementById("time").value;
-
-localStorage.setItem("date",date);
-localStorage.setItem("time",time);
-
-screen3.classList.add("hidden");
-screen4.classList.remove("hidden");
-
-};
-
-document.querySelectorAll(".food")
-.forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-const date =
-localStorage.getItem("date");
-
-const time =
-localStorage.getItem("time");
-
-screen4.classList.add("hidden");
-screen5.classList.remove("hidden");
-
-document.getElementById("summary")
-.innerHTML=
-
-`
-📅 Date: ${date}<br><br>
-⏰ Time: ${time}<br><br>
-🍴 Food: ${btn.innerText}<br><br>
-
-Be ready. 🚗
-`;
+    nextScreen(4, 5);
 
 });
 
+// ---------- TIME ----------
+
+document.getElementById("timeNext")
+.addEventListener("click", () => {
+
+    selectedTime =
+        document.getElementById("timePicker").value;
+
+    nextScreen(5, 6);
+
 });
 
-function createHeart(){
+// ---------- ACTIVITIES ----------
 
-const heart =
-document.createElement("div");
+const cards =
+document.querySelectorAll(".activity-card");
 
-heart.className = "particle";
+cards.forEach(card => {
 
-heart.innerHTML = "💖";
+    card.addEventListener("click", () => {
 
-heart.style.left =
-Math.random()*100+"vw";
+        selectedActivity =
+            card.dataset.activity;
 
-document.body.appendChild(heart);
+        card.classList.add("selected");
 
-setTimeout(()=>{
-heart.remove();
-},8000);
+        card.innerHTML +=
+        `<div class="selected-tag">✓ Selected</div>`;
+
+        setTimeout(() => {
+
+            nextScreen(6, 7);
+
+            startLoading();
+
+        }, 1000);
+
+    });
+
+});
+
+// ---------- LOADING ----------
+
+function startLoading() {
+
+    const messages = [
+        "Planning perfect date...",
+        "Checking availability...",
+        "Finding best vibes...",
+        "Almost done...",
+        "Success ❤️"
+    ];
+
+    let progress = 0;
+    let messageIndex = 0;
+
+    const loadingText =
+        document.getElementById("loadingText");
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    const interval = setInterval(() => {
+
+        progress += 2;
+
+        progressFill.style.width =
+            progress + "%";
+
+        if (
+            progress % 20 === 0 &&
+            messageIndex < messages.length - 1
+        ) {
+
+            messageIndex++;
+
+            loadingText.innerText =
+                messages[messageIndex];
+
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(interval);
+
+            setTimeout(() => {
+
+                showFinalScreen();
+
+            }, 600);
+
+        }
+
+    }, 70);
 
 }
 
-setInterval(createHeart,800);
+// ---------- FINAL SCREEN ----------
+
+function showFinalScreen() {
+
+    nextScreen(7, 8);
+
+    const summary =
+        document.getElementById("finalSummary");
+
+    summary.innerHTML = `
+        <p>📅 <strong>${selectedDate}</strong></p>
+        <p>⏰ <strong>${selectedTime}</strong></p>
+        <p>✨ <strong>${selectedActivity}</strong></p>
+    `;
+
+}
+
+// ---------- WHATSAPP ----------
+
+const WHATSAPP_NUMBER =
+"237XXXXXXXXX";
+
+document
+.getElementById("whatsappBtn")
+.addEventListener("click", () => {
+
+    const message =
+
+`Hey 😊
+
+I completed your date invitation.
+
+📅 Date: ${selectedDate}
+
+⏰ Time: ${selectedTime}
+
+✨ Activity: ${selectedActivity}
+
+Now I guess you actually have to plan this 😅`;
+
+    const url =
+`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank");
+
+});
+
+// ---------- HEART CONFETTI ----------
+
+function createHeartBurst() {
+
+    const container =
+        document.getElementById("confettiContainer");
+
+    for (let i = 0; i < 40; i++) {
+
+        const heart =
+            document.createElement("div");
+
+        heart.innerHTML = "❤️";
+
+        heart.className =
+            "heart-confetti";
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.top =
+            "50vh";
+
+        heart.style.animationDelay =
+            Math.random() * 0.4 + "s";
+
+        heart.style.transform =
+            `rotate(${Math.random()*360}deg)`;
+
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 3000);
+
+    }
+
+}
