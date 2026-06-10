@@ -1,1 +1,103 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>I Have A Question ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="particles"></div>
+
+<div class="container">
+
+<div class="card" id="screen1">
+
+<h1>🌸 I have a question... 🌸</h1>
+
+<p>Will you go on a date with me?</p>
+
+<div class="buttons">
+
+<button id="yesBtn">YES ❤️</button>
+
+<button id="noBtn">NO 😭</button>
+
+</div>
+
+</div>
+
+<div class="card hidden" id="screen2">
+
+<h1>WAIT... 😳</h1>
+
+<p>You actually clicked YES?</p>
+
+<button id="continueBtn">Continue ➜</button>
+
+</div>
+
+<div class="card hidden" id="screen3">
+
+<h1>📅 Pick a Day</h1>
+
+<input type="date" id="date">
+
+<h2>⏰ Pick a Time</h2>
+
+<select id="time">
+
+<option>12:00 PM</option>
+<option>12:30 PM</option>
+<option>1:00 PM</option>
+<option>1:30 PM</option>
+<option>2:00 PM</option>
+<option>2:30 PM</option>
+<option>3:00 PM</option>
+<option>3:30 PM</option>
+<option>4:00 PM</option>
+<option>4:30 PM</option>
+<option>5:00 PM</option>
+
+</select>
+
+<button id="nextBtn">Next ➜</button>
+
+</div>
+
+<div class="card hidden" id="screen4">
+
+<h1>🍕 What's the vibe?</h1>
+
+<div class="food-grid">
+
+<button class="food">🍕 Pizza</button>
+<button class="food">🍔 Burgers</button>
+<button class="food">🍣 Sushi</button>
+<button class="food">🌮 Tacos</button>
+<button class="food">🍜 Ramen</button>
+<button class="food">☕ Coffee</button>
+
+</div>
+
+</div>
+
+<div class="card hidden" id="screen5">
+
+<h1>💖 Mission Successful 💖</h1>
+
+<p id="summary"></p>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
