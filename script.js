@@ -1,147 +1,127 @@
+const screen1 = document.getElementById("screen1");
+const screen2 = document.getElementById("screen2");
+const screen3 = document.getElementById("screen3");
+const screen4 = document.getElementById("screen4");
+const screen5 = document.getElementById("screen5");
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(
-135deg,
-#ffd6ec,
-#ffe6f2
-);
-overflow:hidden;
-padding:20px;
-}
+let attempts = 0;
 
-.container{
-width:100%;
-max-width:420px;
-}
+function moveButton(){
 
-.card{
-background:white;
-padding:30px;
-border-radius:25px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,.1);
-animation:fade .5s ease;
-}
+const x =
+Math.random() *
+(window.innerWidth - 120);
 
-.hidden{
-display:none;
-}
+const y =
+Math.random() *
+(window.innerHeight - 80);
 
-h1{
-margin-bottom:15px;
-color:#7a2c5a;
-}
+noBtn.style.left = x + "px";
+noBtn.style.top = y + "px";
 
-p{
-margin-bottom:20px;
-}
+attempts++;
 
-.buttons{
-display:flex;
-justify-content:center;
-gap:15px;
-margin-top:20px;
-}
+const texts = [
+"No 😭",
+"Really?",
+"Come on 😭",
+"Not happening",
+"Try harder 😂",
+"You can't catch me"
+];
 
-button{
-border:none;
-padding:14px 22px;
-border-radius:30px;
-cursor:pointer;
-font-size:16px;
-}
-
-#yesBtn,
-#continueBtn,
-#nextBtn{
-background:#ff4fa2;
-color:white;
-}
-
-#noBtn{
-background:#d9b3ff;
-color:white;
-position:fixed;
-}
-
-input,
-select{
-width:100%;
-padding:12px;
-margin-top:10px;
-margin-bottom:15px;
-border-radius:10px;
-border:1px solid #ddd;
-}
-
-.food-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.food{
-background:#f8f2f7;
-color:black;
-}
-
-.food:hover{
-background:#ffd6ec;
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.particle{
-position:absolute;
-font-size:20px;
-animation:float 8s linear infinite;
-}
-
-@keyframes float{
-from{
-transform:translateY(100vh);
-}
-to{
-transform:translateY(-120vh);
-}
-}
-
-@media(max-width:430px){
-
-.card{
-padding:20px;
-}
-
-h1{
-font-size:24px;
-}
-
-button{
-width:100%;
-}
-
-.buttons{
-flex-direction:column;
+if(attempts < texts.length){
+noBtn.innerText = texts[attempts];
 }
 
 }
+
+setInterval(moveButton,2000);
+
+noBtn.addEventListener("mouseover",moveButton);
+
+yesBtn.onclick = ()=>{
+
+screen1.classList.add("hidden");
+screen2.classList.remove("hidden");
+
+};
+
+document.getElementById("continueBtn")
+.onclick=()=>{
+
+screen2.classList.add("hidden");
+screen3.classList.remove("hidden");
+
+};
+
+document.getElementById("nextBtn")
+.onclick=()=>{
+
+const date =
+document.getElementById("date").value;
+
+const time =
+document.getElementById("time").value;
+
+localStorage.setItem("date",date);
+localStorage.setItem("time",time);
+
+screen3.classList.add("hidden");
+screen4.classList.remove("hidden");
+
+};
+
+document.querySelectorAll(".food")
+.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+const date =
+localStorage.getItem("date");
+
+const time =
+localStorage.getItem("time");
+
+screen4.classList.add("hidden");
+screen5.classList.remove("hidden");
+
+document.getElementById("summary")
+.innerHTML=
+
+`
+📅 Date: ${date}<br><br>
+⏰ Time: ${time}<br><br>
+🍴 Food: ${btn.innerText}<br><br>
+
+Be ready. 🚗
+`;
+
+});
+
+});
+
+function createHeart(){
+
+const heart =
+document.createElement("div");
+
+heart.className = "particle";
+
+heart.innerHTML = "💖";
+
+heart.style.left =
+Math.random()*100+"vw";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},8000);
+
+}
+
+setInterval(createHeart,800);
