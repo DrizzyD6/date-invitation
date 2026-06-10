@@ -1,103 +1,214 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>I Have A Question ❤️</title>
+<title>For Princess 💖</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div id="particles"></div>
+<div class="background-blur"></div>
 
 <div class="container">
 
-<div class="card" id="screen1">
+<!-- SCREEN 1 -->
 
-<h1>🌸 I have a question... 🌸</h1>
+<div class="card active" id="screen1">
 
-<p>Will you go on a date with me?</p>
+<h1>👋 Hey Princess</h1>
 
-<div class="buttons">
+<p>I made something for you...</p>
 
-<button id="yesBtn">YES ❤️</button>
+<button class="main-btn" onclick="nextScreen(1,2)">
+Continue →
+</button>
 
-<button id="noBtn">NO 😭</button>
+</div>
+
+<!-- SCREEN 2 -->
+
+<div class="card" id="screen2">
+
+<h1>💌</h1>
+
+<p>I have something important to ask you...</p>
+
+<button class="main-btn" onclick="nextScreen(2,3)">
+Continue →
+</button>
+
+</div>
+
+<!-- SCREEN 3 -->
+
+<div class="card" id="screen3">
+
+<h1>😊</h1>
+
+<p class="question">
+Would you go on a date with me?
+</p>
+
+<div class="choice-area">
+
+<button id="yesBtn" class="yes-btn">
+Yes 😊
+</button>
+
+<button id="noBtn" class="no-btn">
+No 😅
+</button>
 
 </div>
 
 </div>
 
-<div class="card hidden" id="screen2">
+<!-- SCREEN 4 -->
 
-<h1>WAIT... 😳</h1>
+<div class="card" id="screen4">
 
-<p>You actually clicked YES?</p>
+<h1>📅</h1>
 
-<button id="continueBtn">Continue ➜</button>
+<p>Pick a day</p>
+
+<input type="date" id="datePicker">
+
+<button class="main-btn" id="dateNext">
+Continue →
+</button>
 
 </div>
 
-<div class="card hidden" id="screen3">
+<!-- SCREEN 5 -->
 
-<h1>📅 Pick a Day</h1>
+<div class="card" id="screen5">
 
-<input type="date" id="date">
+<h1>⏰</h1>
 
-<h2>⏰ Pick a Time</h2>
+<p>Pick a time</p>
 
-<select id="time">
+<select id="timePicker">
 
 <option>12:00 PM</option>
-<option>12:30 PM</option>
 <option>1:00 PM</option>
-<option>1:30 PM</option>
 <option>2:00 PM</option>
-<option>2:30 PM</option>
 <option>3:00 PM</option>
-<option>3:30 PM</option>
 <option>4:00 PM</option>
-<option>4:30 PM</option>
 <option>5:00 PM</option>
+<option>6:00 PM</option>
+<option>7:00 PM</option>
 
 </select>
 
-<button id="nextBtn">Next ➜</button>
+<button class="main-btn" id="timeNext">
+Continue →
+</button>
 
 </div>
 
-<div class="card hidden" id="screen4">
+<!-- SCREEN 6 -->
 
-<h1>🍕 What's the vibe?</h1>
+<div class="card" id="screen6">
 
-<div class="food-grid">
+<h1>✨ Choose the vibe ✨</h1>
 
-<button class="food">🍕 Pizza</button>
-<button class="food">🍔 Burgers</button>
-<button class="food">🍣 Sushi</button>
-<button class="food">🌮 Tacos</button>
-<button class="food">🍜 Ramen</button>
-<button class="food">☕ Coffee</button>
+<div class="activity-grid">
+
+<div class="activity-card" data-activity="Ice Cream 🍦">
+🍦
+<span>Ice Cream</span>
+</div>
+
+<div class="activity-card" data-activity="KFC 🍗">
+🍗
+<span>KFC</span>
+</div>
+
+<div class="activity-card" data-activity="Movie Night 🎬">
+🎬
+<span>Movie Night</span>
+</div>
+
+<div class="activity-card" data-activity="Late Night Walk 🚶">
+🚶
+<span>Late Night Walk</span>
+</div>
+
+<div class="activity-card" data-activity="Beach Day 🏖️">
+🏖️
+<span>Beach Day</span>
+</div>
+
+<div class="activity-card" data-activity="Pizza Date 🍕">
+🍕
+<span>Pizza Date</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- SCREEN 7 -->
+
+<div class="card" id="screen7">
+
+<h1>💖</h1>
+
+<p id="loadingText">
+Planning perfect date...
+</p>
+
+<div class="progress-wrapper">
+
+<div class="progress-bar">
+
+<div class="progress-fill" id="progressFill"></div>
 
 </div>
 
 </div>
 
-<div class="card hidden" id="screen5">
+</div>
 
-<h1>💖 Mission Successful 💖</h1>
+<!-- SCREEN 8 -->
 
-<p id="summary"></p>
+<div class="card" id="screen8">
+
+<h1>😎 Date Request Accepted</h1>
+
+<div id="finalSummary"></div>
+
+<p class="final-line">
+
+Now I guess I actually have to plan this 😅
+
+</p>
+
+<button id="whatsappBtn" class="main-btn">
+
+📱 Send My Choice
+
+</button>
 
 </div>
 
 </div>
+
+<!-- HEART CONFETTI -->
+
+<div id="confettiContainer"></div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
+```
